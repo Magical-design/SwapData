@@ -1,0 +1,40 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:SwapDataUCtr">
+
+    <local:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+    
+    <Style TargetType="Ellipse" x:Key="EllipseStatusBase">
+        <Setter Property="Fill" Value="Red"></Setter>
+    </Style>
+    <Style TargetType="Ellipse"  BasedOn="{StaticResource EllipseStatusBase}"  x:Key="EllipseConnectStu1">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding swapDVM._Parm.CurParmCMU1.StatusConnect}" Value="True">
+                <Setter Property="Fill" Value="Green"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Ellipse"  BasedOn="{StaticResource EllipseStatusBase}"  x:Key="EllipseConnectStu2">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding swapDVM._Parm.CurParmCMU2.StatusConnect}" Value="True">
+                <Setter Property="Fill" Value="Green"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Grid" x:Key="GridVisible">
+        <Setter Property="Visibility" Value="Hidden"/>
+    </Style>
+    <Style TargetType="Grid"  BasedOn="{StaticResource GridVisible}"  x:Key="GridVisibleIP">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding swapDVM.Visible}" Value="1">
+                <Setter Property="Visibility" Value="Visible"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Grid"  BasedOn="{StaticResource GridVisible}"  x:Key="GridVisibleSerial">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding swapDVM.Visible}" Value="2">
+                <Setter Property="Visibility" Value="Visible"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>
