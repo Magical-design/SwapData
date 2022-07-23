@@ -1,5 +1,37 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:SwapData">
-    
+                    xmlns:local="clr-namespace:SwapData" >
+    <Storyboard x:Key="MyStoryboard">
+        <ColorAnimation  Storyboard.TargetProperty="BorderBrush.Color" From="Red" To="Gray" AutoReverse="True" Duration="00:00:00.5" RepeatBehavior="0:0:3">
+        </ColorAnimation>
+
+    </Storyboard>
+    <Style x:Key="btStyle" TargetType="Button" >
+        <Setter Property="BorderThickness" Value="2,2,2,2" ></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding MainPageShow}" Value="True">
+                <Setter Property="BorderBrush" Value="Green"/>
+                <!--<DataTrigger.EnterActions>
+                    <BeginStoryboard Name="borderChangStoryboard" Storyboard="{StaticResource MyStoryboard}">
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+                <DataTrigger.ExitActions>
+                    <StopStoryboard BeginStoryboardName="borderChangStoryboard"></StopStoryboard>
+                </DataTrigger.ExitActions>-->
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style  x:Key="btStyle1" TargetType="Grid">
+        <Setter Property="Background" Value="White" />
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource Self}}" Value="True"/>
+                    <Condition Binding="{Binding MainPageShow}" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter  Property="Background" Value="Yellow" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

@@ -23,18 +23,98 @@
     <Style TargetType="Grid" x:Key="GridVisible">
         <Setter Property="Visibility" Value="Hidden"/>
     </Style>
-    <Style TargetType="Grid"  BasedOn="{StaticResource GridVisible}"  x:Key="GridVisibleIP">
+    <Style TargetType="Grid"  BasedOn="{StaticResource GridVisible}"  x:Key="GridVisibleIP1">
         <Style.Triggers>
-            <DataTrigger Binding="{Binding swapDVM.Visible}" Value="1">
+            <DataTrigger Binding="{Binding swapDVM.Visible1}" Value="1">
                 <Setter Property="Visibility" Value="Visible"></Setter>
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    <Style TargetType="Grid"  BasedOn="{StaticResource GridVisible}"  x:Key="GridVisibleSerial">
+    <Style TargetType="Grid"  BasedOn="{StaticResource GridVisible}"  x:Key="GridVisibleSerial1">
         <Style.Triggers>
-            <DataTrigger Binding="{Binding swapDVM.Visible}" Value="2">
+            <DataTrigger Binding="{Binding swapDVM.Visible1}" Value="2">
                 <Setter Property="Visibility" Value="Visible"></Setter>
             </DataTrigger>
         </Style.Triggers>
     </Style>
+    <Style TargetType="Grid"  BasedOn="{StaticResource GridVisible}"  x:Key="GridVisibleStation1">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding swapDVM.StationVisible1}" Value="1">
+                <Setter Property="Visibility" Value="Visible"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Grid"  BasedOn="{StaticResource GridVisible}"  x:Key="GridVisibleIP2">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding swapDVM.Visible2}" Value="1">
+                <Setter Property="Visibility" Value="Visible"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Grid"  BasedOn="{StaticResource GridVisible}"  x:Key="GridVisibleSerial2">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding swapDVM.Visible2}" Value="2">
+                <Setter Property="Visibility" Value="Visible"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Grid"  BasedOn="{StaticResource GridVisible}"  x:Key="GridVisibleStation2">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding swapDVM.StationVisible2}" Value="1">
+                <Setter Property="Visibility" Value="Visible"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Grid" x:Key="_Running1">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding swapDVM.Running1}" Value="True">
+                <Setter Property="Background"  Value="LightSkyBlue"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Grid" x:Key="_Running2">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding swapDVM.Running2}" Value="True">
+                <Setter Property="Background"  Value="LightSkyBlue"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Label" x:Key="Visiblex16Base">
+        <Setter Property="Visibility" Value="Hidden"/>
+    </Style>
+    <Style TargetType="Label" x:Key="Visible1x16" BasedOn="{StaticResource Visiblex16Base}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding swapDVM._Parm.CurParmCMU2.CurType}" Value="D">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding swapDVM._Parm.CurParmCMU1.CurType}" Value="D">
+                <Setter Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding swapDVM._Parm.CurParmCMU1.CurType}" Value="M" ></Condition>
+                    <Condition Binding="{Binding swapDVM._Parm.CurParmCMU2.CurType}" Value="M"></Condition>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Visibility" Value="Hidden"/>
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Label" x:Key="Visible2x16" BasedOn="{StaticResource Visiblex16Base}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding swapDVM._Parm.CurParmCMU1.CurType}" Value="D">
+                <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding swapDVM._Parm.CurParmCMU2.CurType}" Value="D">
+                <Setter Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding swapDVM._Parm.CurParmCMU1.CurType}" Value="M" ></Condition>
+                    <Condition Binding="{Binding swapDVM._Parm.CurParmCMU2.CurType}" Value="M"></Condition>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Visibility" Value="Hidden"/>
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+    
 </ResourceDictionary>

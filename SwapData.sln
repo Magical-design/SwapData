@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwapData", "SwapData\SwapData.csproj", "{008909F2-C0D5-4FDC-A67E-A2EAA8DEA0E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwapData", "SwapData\SwapData.csproj", "{008909F2-C0D5-4FDC-A67E-A2EAA8DEA0E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwapDataUCtr", "SwapDataUCtr\SwapDataUCtr.csproj", "{B9A6E853-4EBC-4A86-BFA6-E9342CB499CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwapDataUCtr", "SwapDataUCtr\SwapDataUCtr.csproj", "{B9A6E853-4EBC-4A86-BFA6-E9342CB499CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib", "..\MLib\MLib\MLib.csproj", "{0B37DC5B-4916-4D83-874E-35FB1F26FB7C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FCB5ACC4-897D-4879-B2DF-320ABF9EF28B}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

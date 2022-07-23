@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
@@ -6,8 +6,30 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IO.Ports" Version="6.0.0" />
+  </ItemGroup>
+
+
+
   <ItemGroup>
     <ProjectReference Include="..\..\MLib\MLib\MLib.csproj" />
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <Reference Include="HslCommunication">
+      <HintPath>bin\Debug\net5.0-windows\HslCommunication.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

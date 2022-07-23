@@ -5,14 +5,33 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>false</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
+    <PackageReference Include="System.IO.Ports" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SwapDataUCtr\SwapDataUCtr.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="HslCommunication">
+      <HintPath>bin\Debug\net5.0-windows\HslCommunication.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
 
 </Project>

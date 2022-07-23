@@ -3,25 +3,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SwapDataUCtr" d:DataContext="{d:DesignInstance Type=local:SwapDVM}"
+             xmlns:local="clr-namespace:SwapDataUCtr" xmlns:MLib="clr-namespace:MLib;assembly=MLib" d:DataContext="{d:DesignInstance Type=local:SwapDVM}"
              mc:Ignorable="d" 
-             d:DesignHeight="125" d:DesignWidth="620"  >
+             d:DesignHeight="150" d:DesignWidth="780"  >
     <UserControl.Resources>
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Dictionary1.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/MLib;component/ViewBase/ViewBaseDic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition  />
         </Grid.ColumnDefinitions>
-
-        <GroupBox Header="对象1">
-            <Grid>
+        <Grid >
+            <TextBlock Text="{Binding swapDVM.ID}"  Width="30" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="#FF4747EF" />
+            <Grid.Style>
+                <Style TargetType="Grid" >
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding swapDVM._Parm.Enable}" Value="True">
+                            <Setter Property="Background" Value="#FF9FE4A9"> </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+        </Grid>
+        <GroupBox Header="对象1" Grid.Column="1" >
+            <Grid Style="{Binding Source={StaticResource _Running1}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -37,23 +50,51 @@
                         <ColumnDefinition Width="20"/>
                     </Grid.ColumnDefinitions>
 
-                    <CheckBox Content="启用" HorizontalAlignment="Left" Width="50" VerticalContentAlignment="Center" Margin="0,0,0,1" IsChecked="{Binding swapDVM._Parm.Enable}" />
-                    <ComboBox x:Name="cbDeviceName" HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Center" Width="80" Grid.Column="1" IsEnabled="{Binding swapDVM._Parm.Enable,Converter={StaticResource InverseBooleanConverter}}" ItemsSource="{Binding swapDVM._Parm.ParmCMU1 }" DisplayMemberPath="DeviceName"  SelectedItem="{Binding swapDVM._Parm.CurParmCMU1}" Text="{Binding swapDVM._Parm.CurParmCMU1.DeviceName}"/>
+                    <CheckBox Content="启用" HorizontalAlignment="Left" Width="50" VerticalContentAlignment="Center"  IsChecked="{Binding swapDVM._Parm.Enable}"  />
+                    <ComboBox x:Name="cbDeviceName" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.Column="1" IsEnabled="{Binding swapDVM._Parm.Enable,Converter={StaticResource InverseBooleanConverter}}" ItemsSource="{Binding swapDVM._Parm.ParmCMU1 }" DisplayMemberPath="DeviceName"  SelectedItem="{Binding swapDVM._Parm.CurParmCMU1}" Text="{Binding swapDVM._Parm.CurParmCMU1.DeviceName}" HorizontalContentAlignment="Center"/>
                     <Label Grid.Column="2"  Height="20"   Width="70" HorizontalAlignment="Center" FontSize="12" Content="连接状态1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" Padding="0,0,0,1"  />
                     <Ellipse x:Name="ConnectStu1"   HorizontalAlignment="Left" Height="15"   Width="15"  Grid.Column="3" Style="{Binding Source={StaticResource EllipseConnectStu1}}" />
 
                 </Grid>
 
-                <Grid Grid.Row="1" Style="{Binding Source={StaticResource GridVisibleIP}}" IsEnabled="{Binding swapDVM._Parm.Enable,Converter={StaticResource InverseBooleanConverter}}">
+                <Grid Grid.Row="1" Style="{Binding Source={StaticResource GridVisibleIP1}}" IsEnabled="{Binding swapDVM._Parm.Enable,Converter={StaticResource InverseBooleanConverter}}">
                     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Label Content="IP" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <TextBox HorizontalAlignment="Left" Text="{Binding swapDVM._Parm.CurParmCMU1.IP }" VerticalAlignment="Top" Width="80" Margin="21,4,0,0"/>
-                        <Label Content="Port" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="101,0,0,0"/>
-                        <TextBox HorizontalAlignment="Left" Text="{Binding swapDVM._Parm.CurParmCMU1.Port}" VerticalAlignment="Top" Width="40" Margin="135,4,0,0"/>
+                        <TextBox HorizontalAlignment="Left"  VerticalAlignment="Center" Width="100" Margin="21,0,0,0"  Height="20" Style="{Binding Source={StaticResource  txbInErrorTip}}">
+                            <TextBox.Text>
+                                <Binding Path="swapDVM._Parm.CurParmCMU1.IP" >
+                                    <Binding.ValidationRules>
+                                        <MLib:IpValidation></MLib:IpValidation>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Label Content="Port" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,0,0,0"/>
+                        <TextBox HorizontalAlignment="Left"  VerticalAlignment="Center" Width="50" Margin="152,0,0,0"  Height="20" Style="{Binding Source={StaticResource  txbInErrorTip}}" >
+                            <TextBox.Text>
+                                <Binding Path="swapDVM._Parm.CurParmCMU1.Port" >
+                                    <Binding.ValidationRules>
+                                        <local:NumValidation></local:NumValidation>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Grid Style="{Binding Source={StaticResource GridVisibleStation1}}">
+                            <Label Content="站号" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="200,0,0,0"/>
+                            <TextBox HorizontalAlignment="Left" VerticalAlignment="Center" Width="40" Margin="232,0,0,0"  Height="20" Style="{Binding Source={StaticResource  txbInErrorTip}}" >
+                                <TextBox.Text>
+                                    <Binding Path="swapDVM._Parm.CurParmCMU1.StationID" >
+                                        <Binding.ValidationRules>
+                                            <local:Num1Validation></local:Num1Validation>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
                     </Grid>
                 </Grid>
 
-                <Grid Grid.Row="1" Style="{Binding Source={StaticResource GridVisibleSerial}}" IsEnabled="{Binding swapDVM._Parm.Enable,Converter={StaticResource InverseBooleanConverter}}">
+                <Grid Grid.Row="1" Style="{Binding Source={StaticResource GridVisibleSerial1}}" IsEnabled="{Binding swapDVM._Parm.Enable,Converter={StaticResource InverseBooleanConverter}}">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -72,12 +113,12 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <Label  Content="COM" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                        <ComboBox HorizontalAlignment="Center"  VerticalAlignment="Center" Width="50" Grid.Column="1"/>
+                        <Label  Content="Port" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                        <ComboBox HorizontalAlignment="Center"  VerticalAlignment="Center" Width="80" Grid.Column="1" ItemsSource="{Binding swapDVM._Parm.CurParmCMU1.Serial }" SelectedItem="{Binding swapDVM._Parm.CurParmCMU1.CurSerial}" Text="{Binding swapDVM._Parm.CurParmCMU1.CurSerial}"/>
                         <Label Grid.Column="2" Content="波特率" HorizontalAlignment="Center" VerticalAlignment="Center"  />
-                        <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="60" Grid.Column="3" />
-                        <Label Content="校验位" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4"/>
-                        <ComboBox HorizontalAlignment="Center"  VerticalAlignment="Center" Width="40" Grid.Column="5"  />
+                        <ComboBox  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" Grid.Column="3" ItemsSource="{Binding swapDVM._Parm.CurParmCMU1.BaudRate }" SelectedItem="{Binding swapDVM._Parm.CurParmCMU1.CurBaudRate}" Text="{Binding swapDVM._Parm.CurParmCMU1.CurBaudRate}" />
+                        <Label Content="校验位" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4" />
+                        <ComboBox HorizontalAlignment="Center"  VerticalAlignment="Center" Width="60" Grid.Column="5" ItemsSource="{Binding swapDVM._Parm.CurParmCMU1.Parity }" SelectedItem="{Binding swapDVM._Parm.CurParmCMU1.CurParity}" Text="{Binding swapDVM._Parm.CurParmCMU1.CurParity}" />
                     </Grid>
                     <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
@@ -85,48 +126,272 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="数据位" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0"/>
-                        <ComboBox HorizontalAlignment="Left"  VerticalAlignment="Center" Width="40" Grid.Column="1" />
+                        <Label Content="数据位" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
+                        <ComboBox HorizontalAlignment="Left"  VerticalAlignment="Center" Width="40" Grid.Column="1"  ItemsSource="{Binding swapDVM._Parm.CurParmCMU1.DataBits }" SelectedItem="{Binding swapDVM._Parm.CurParmCMU1.CurDataBits}" Text="{Binding swapDVM._Parm.CurParmCMU1.CurDataBits}"/>
                         <Label Content="停止位" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2"  />
-                        <ComboBox HorizontalAlignment="Left"  VerticalAlignment="Center" Width="40"  Grid.Column="3" />
+                        <ComboBox HorizontalAlignment="Left"  VerticalAlignment="Center" Width="40"  Grid.Column="3" ItemsSource="{Binding swapDVM._Parm.CurParmCMU1.StopBits }" SelectedItem="{Binding swapDVM._Parm.CurParmCMU1.CurStopBits}" Text="{Binding swapDVM._Parm.CurParmCMU1.CurStopBits}"/>
+
+                        <Grid Grid.Column="4" Style="{Binding Source={StaticResource GridVisibleStation1}}" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Label Content="站号" HorizontalAlignment="Left" VerticalAlignment="Center"  />
+                            <TextBox HorizontalAlignment="Left"  VerticalAlignment="Center" Width="40"   Height="20" Grid.Column="1" Style="{Binding Source={StaticResource  txbInErrorTip}}" >
+                                <TextBox.Text>
+                                    <Binding Path="swapDVM._Parm.CurParmCMU1.StationID" >
+                                        <Binding.ValidationRules>
+                                            <local:Num1Validation></local:Num1Validation>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
                     </Grid>
                 </Grid>
                 <Grid  Grid.Row="2" IsEnabled="{Binding swapDVM._Parm.Enable,Converter={StaticResource InverseBooleanConverter}}">
                     <Grid HorizontalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <ComboBox HorizontalAlignment="Center"  VerticalAlignment="Center" Width="40" />
-                        <TextBox HorizontalAlignment="Center"  VerticalAlignment="Center" Width="60" Grid.Column="1" Margin="10,0,0,0" />
-                        <Label Content="长度" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2"  />
-                        <TextBox HorizontalAlignment="Center"  VerticalAlignment="Center" Width="60" Grid.Column="3"/>
+                        <ComboBox HorizontalContentAlignment="Center" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="80" ItemsSource="{Binding swapDVM._Parm.CurParmCMU1.Type }" SelectedItem="{Binding swapDVM._Parm.CurParmCMU1.CurType}" Text="{Binding swapDVM._Parm.CurParmCMU1.CurType}" />
+                        <Label Content="发送起始地址" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"  />
+                        <TextBox HorizontalAlignment="Center"  VerticalAlignment="Center" Width="60" Grid.Column="2"  Height="20" Style="{Binding Source={StaticResource  txbInErrorTip}}"  >
+                            <TextBox.Text>
+                                <Binding Path="swapDVM._Parm.CurParmCMU1.SedFirstAdd" >
+                                    <Binding.ValidationRules>
+                                        <local:NumValidation></local:NumValidation>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Label Content="长度" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="3" />
+                        <TextBox HorizontalAlignment="Center"  VerticalAlignment="Center" Width="60" Grid.Column="4"  Height="20" Style="{Binding Source={StaticResource  txbInErrorTip}}" >
+                            <TextBox.Text >
+                                <Binding Path="swapDVM._Parm.CurParmCMU1.SedLen" >
+                                    <Binding.ValidationRules>
+                                        <local:NumValidation></local:NumValidation>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Label Grid.Column="5" Content="x16" Style="{Binding Source={StaticResource Visible1x16}}" Foreground="Red"></Label>
+                        <Label Content="接收起始地址" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" />
+                        <TextBox HorizontalAlignment="Center"  VerticalAlignment="Center" Width="60" Grid.Column="2"  Grid.Row="1" Height="20" Style="{Binding Source={StaticResource  txbInErrorTip}}" >
+                            <TextBox.Text>
+                                <Binding Path="swapDVM._Parm.CurParmCMU1.RecFirstAdd" >
+                                    <Binding.ValidationRules>
+                                        <local:NumValidation></local:NumValidation>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Label Content="长度" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="3"  Grid.Row="1"   />
+                        <TextBox HorizontalAlignment="Center"  VerticalAlignment="Center" Width="60" Grid.Column="4"  Grid.Row="1" Height="20" Style="{Binding Source={StaticResource  txbInErrorTip}}" >
+                            <TextBox.Text>
+                                <Binding Path="swapDVM._Parm.CurParmCMU1.RecLen" >
+                                    <Binding.ValidationRules>
+                                        <local:NumValidation></local:NumValidation>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Label Grid.Column="5" Grid.Row="1" Content="x16" Style="{Binding Source={StaticResource Visible1x16}}" Foreground="Red"></Label>
 
                     </Grid>
-                    <Button Content="Button" HorizontalAlignment="Left" Margin="256,0,0,0" VerticalAlignment="Center" Click="Button_Click" />
+
                 </Grid>
 
             </Grid>
         </GroupBox>
-        <GroupBox Header="对象2" Grid.Column="1" >
-            <Grid >
+        <GroupBox Header="对象2" Grid.Column="2" >
+            <Grid Style="{Binding Source={StaticResource _Running2}}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition />
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Grid  >
+
+                <Grid Margin="0,2,0,2"  >
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60" />
                         <ColumnDefinition />
                         <ColumnDefinition Width="AUTO"/>
                         <ColumnDefinition Width="20"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Center" Width="80" Grid.Column="1"/>
-                    <Label Grid.Column="2"  Height="20"   Width="70" HorizontalAlignment="Center" FontSize="12" Content="连接状态2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" Padding="0,0,0,1" />
-                    <Ellipse x:Name="ConnectStu2"   HorizontalAlignment="Left" Height="15"   Width="15"  Grid.Column="3" Style="{Binding Source={StaticResource EllipseConnectStu2}}"/>
+
+                    <ComboBox x:Name="cbDeviceName2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Grid.Column="1" IsEnabled="{Binding swapDVM._Parm.Enable,Converter={StaticResource InverseBooleanConverter}}" ItemsSource="{Binding swapDVM._Parm.ParmCMU2 }" DisplayMemberPath="DeviceName"  SelectedItem="{Binding swapDVM._Parm.CurParmCMU2}" Text="{Binding swapDVM._Parm.CurParmCMU2.DeviceName}" HorizontalContentAlignment="Center"/>
+                    <Label Grid.Column="2"  Height="20"   Width="70" HorizontalAlignment="Center" FontSize="12" Content="连接状态2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" Padding="0,0,0,1"  />
+                    <Ellipse x:Name="ConnectStu2"   HorizontalAlignment="Left" Height="15"   Width="15"  Grid.Column="3" Style="{Binding Source={StaticResource EllipseConnectStu2}}" />
+
+                </Grid>
+
+                <Grid Grid.Row="1" Style="{Binding Source={StaticResource GridVisibleIP2}}" IsEnabled="{Binding swapDVM._Parm.Enable,Converter={StaticResource InverseBooleanConverter}}">
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Content="IP" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox HorizontalAlignment="Left"  VerticalAlignment="Center" Width="100" Margin="21,0,0,0"  Height="20" Style="{Binding Source={StaticResource  txbInErrorTip}}">
+                            <TextBox.Text>
+                                <Binding Path="swapDVM._Parm.CurParmCMU2.IP" >
+                                    <Binding.ValidationRules>
+                                        <MLib:IpValidation></MLib:IpValidation>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Label Content="Port" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,0,0,0"/>
+                        <TextBox HorizontalAlignment="Left"  VerticalAlignment="Center" Width="50" Margin="152,0,0,0"  Height="20" Style="{Binding Source={StaticResource  txbInErrorTip}}" >
+                            <TextBox.Text>
+                                <Binding Path="swapDVM._Parm.CurParmCMU2.Port" >
+                                    <Binding.ValidationRules>
+                                        <local:NumValidation></local:NumValidation>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Grid Style="{Binding Source={StaticResource GridVisibleStation2}}">
+                            <Label Content="站号" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="200,0,0,0"/>
+                            <TextBox HorizontalAlignment="Left" VerticalAlignment="Center" Width="40" Margin="232,0,0,0"  Height="20" Style="{Binding Source={StaticResource  txbInErrorTip}}" >
+                                <TextBox.Text>
+                                    <Binding Path="swapDVM._Parm.CurParmCMU2.StationID" >
+                                        <Binding.ValidationRules>
+                                            <local:Num1Validation></local:Num1Validation>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="1" Style="{Binding Source={StaticResource GridVisibleSerial2}}" IsEnabled="{Binding swapDVM._Parm.Enable,Converter={StaticResource InverseBooleanConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Top" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Label  Content="Port" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                        <ComboBox HorizontalAlignment="Center"  VerticalAlignment="Center" Width="80" Grid.Column="1" ItemsSource="{Binding swapDVM._Parm.CurParmCMU2.Serial }" SelectedItem="{Binding swapDVM._Parm.CurParmCMU2.CurSerial}" Text="{Binding swapDVM._Parm.CurParmCMU2.CurSerial}"/>
+                        <Label Grid.Column="2" Content="波特率" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+                        <ComboBox  HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" Grid.Column="3" ItemsSource="{Binding swapDVM._Parm.CurParmCMU2.BaudRate }" SelectedItem="{Binding swapDVM._Parm.CurParmCMU2.CurBaudRate}" Text="{Binding swapDVM._Parm.CurParmCMU2.CurBaudRate}" />
+                        <Label Content="校验位" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4" />
+                        <ComboBox HorizontalAlignment="Center"  VerticalAlignment="Center" Width="60" Grid.Column="5" ItemsSource="{Binding swapDVM._Parm.CurParmCMU2.Parity }" SelectedItem="{Binding swapDVM._Parm.CurParmCMU2.CurParity}" Text="{Binding swapDVM._Parm.CurParmCMU2.CurParity}" />
+                    </Grid>
+                    <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="数据位" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
+                        <ComboBox HorizontalAlignment="Left"  VerticalAlignment="Center" Width="40" Grid.Column="1"  ItemsSource="{Binding swapDVM._Parm.CurParmCMU2.DataBits }" SelectedItem="{Binding swapDVM._Parm.CurParmCMU2.CurDataBits}" Text="{Binding swapDVM._Parm.CurParmCMU2.CurDataBits}"/>
+                        <Label Content="停止位" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2"  />
+                        <ComboBox HorizontalAlignment="Left"  VerticalAlignment="Center" Width="40"  Grid.Column="3" ItemsSource="{Binding swapDVM._Parm.CurParmCMU2.StopBits }" SelectedItem="{Binding swapDVM._Parm.CurParmCMU2.CurStopBits}" Text="{Binding swapDVM._Parm.CurParmCMU2.CurStopBits}"/>
+
+                        <Grid Grid.Column="4" Style="{Binding Source={StaticResource GridVisibleStation2}}" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Label Content="站号" HorizontalAlignment="Left" VerticalAlignment="Center"  />
+                            <TextBox HorizontalAlignment="Left"  VerticalAlignment="Center" Width="40"   Height="20" Grid.Column="1" Style="{Binding Source={StaticResource  txbInErrorTip}}" >
+                                <TextBox.Text>
+                                    <Binding Path="swapDVM._Parm.CurParmCMU2.StationID" >
+                                        <Binding.ValidationRules>
+                                            <local:Num1Validation></local:Num1Validation>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid  Grid.Row="2" IsEnabled="{Binding swapDVM._Parm.Enable,Converter={StaticResource InverseBooleanConverter}}">
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox HorizontalContentAlignment="Center" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="80" ItemsSource="{Binding swapDVM._Parm.CurParmCMU2.Type }" SelectedItem="{Binding swapDVM._Parm.CurParmCMU2.CurType}" Text="{Binding swapDVM._Parm.CurParmCMU2.CurType}" />
+                        <Label Content="发送起始地址" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" />
+                        <TextBox Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="60" Grid.Column="2"  Height="20" Style="{Binding Source={StaticResource  txbInErrorTip}}"  >
+                            <TextBox.Text>
+                                <Binding Path="swapDVM._Parm.CurParmCMU2.SedFirstAdd" >
+                                    <Binding.ValidationRules>
+                                        <local:NumValidation></local:NumValidation>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Label Content="长度" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="3" Grid.Row="1" />
+                        <TextBox Grid.Row="1" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="60" Grid.Column="4"  Height="20" Style="{Binding Source={StaticResource  txbInErrorTip}}" IsEnabled="False" >
+                            <TextBox.Text >
+                                <Binding Path="swapDVM._Parm.CurParmCMU1.SedLen" >
+                                    <Binding.ValidationRules>
+                                        <local:NumValidation></local:NumValidation>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Label Grid.Column="5" Grid.Row="1" Content="x16" Style="{Binding Source={StaticResource Visible2x16}}" Foreground="Red" ></Label>
+                        <Label Content="接收起始地址" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1"  />
+                        <TextBox HorizontalAlignment="Center"  VerticalAlignment="Center" Width="60" Grid.Column="2"  Height="20" Style="{Binding Source={StaticResource  txbInErrorTip}}" >
+                            <TextBox.Text>
+                                <Binding Path="swapDVM._Parm.CurParmCMU2.RecFirstAdd" >
+                                    <Binding.ValidationRules>
+                                        <local:NumValidation></local:NumValidation>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Label Content="长度" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="3"    />
+                        <TextBox HorizontalAlignment="Center"  VerticalAlignment="Center" Width="60" Grid.Column="4"   Height="20" Style="{Binding Source={StaticResource  txbInErrorTip}}" IsEnabled="False">
+                            <TextBox.Text>
+                                <Binding Path="swapDVM._Parm.CurParmCMU1.RecLen" >
+                                    <Binding.ValidationRules>
+                                        <local:NumValidation></local:NumValidation>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Label Grid.Column="5" Content="x16" Style="{Binding Source={StaticResource Visible2x16}}" Foreground="Red"></Label>
+                    </Grid>
                 </Grid>
             </Grid>
         </GroupBox>

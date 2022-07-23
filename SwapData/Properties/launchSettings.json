@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SwapData": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}

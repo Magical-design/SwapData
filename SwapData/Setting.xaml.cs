@@ -1,4 +1,4 @@
-﻿using SwapDataUCtr.Model;
+﻿using SwapData.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,25 +14,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SwapDataUCtr
+namespace SwapData
 {
     /// <summary>
-    /// SwapD.xaml 的交互逻辑
+    /// Setting.xaml 的交互逻辑
     /// </summary>
-    public partial class SwapD : UserControl
+    public partial class Setting : UserControl
     {
-        public SwapDVM swapDVM { get; set; } = new SwapDVM();
-        public SwapD()
-        {
-            InitializeComponent();           
-            DataContext = this;
-        }
-        public SwapD(int id)
+        public Setting()
         {
             InitializeComponent();
-            DataContext = this;
-            swapDVM.ID = id;
-            swapDVM.InitAndRun();
+            DataContext = new SettingVM();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
+
 namespace SwapDataUCtr
 {
     public class Parm : INotifyPropertyChanged
@@ -19,9 +20,10 @@ namespace SwapDataUCtr
             {
                 mEnable = value;
                 OnPropertyChanged("Enable");
+                IsCheckedChanged?.Invoke(null, null);
             }
         }
-        private ParmCMU mCurParmCMU1=new ParmCMU();
+        private  ParmCMU mCurParmCMU1=new ParmCMU();
         public ParmCMU CurParmCMU1
         {
             get { return mCurParmCMU1; }   
@@ -39,7 +41,6 @@ namespace SwapDataUCtr
             get
             {
                 return mParmCMU1;
-
             }
             set
             {
@@ -56,6 +57,7 @@ namespace SwapDataUCtr
             {
                 mCurParmCMU2 = value;
                 OnPropertyChanged("CurParmCMU2");
+                CurParmCMU2Changed?.Invoke(value, null);
             }
         }
 
@@ -77,15 +79,21 @@ namespace SwapDataUCtr
         public Parm()
         {
 
-           
+        
+       
         }
+
         #region ÊÂ¼þ
+        public event EventHandler IsCheckedChanged;
         public event EventHandler CurParmCMU1Changed;
+        public event EventHandler CurParmCMU2Changed;
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            
         }
+        
         #endregion
     }
 
@@ -141,6 +149,19 @@ namespace SwapDataUCtr
                 OnPropertyChanged("Port");
             }
         }
+        private  int mStationID = 1;
+        public int StationID
+        {
+            get
+            {
+                return mStationID;
+            }
+            set
+            {
+                mStationID = value;
+                OnPropertyChanged("StationID");
+            }
+        }
 
         private string mCurSerial = "COM1";
         public string CurSerial
@@ -155,7 +176,7 @@ namespace SwapDataUCtr
                 OnPropertyChanged("CurSerial");
             }
         }
-        private List<string> mSerial = new List<string>();
+        private List<string> mSerial=new List<string>();
         public List<string> Serial
         {
             get { return mSerial; }
@@ -283,37 +304,67 @@ namespace SwapDataUCtr
             }
         }
 
-        private int mFirstAdd = 0;
-        public int FirstAdd
+        private int mSedFirstAdd = 0;
+        public int SedFirstAdd
         {
             get
             {
-                return mFirstAdd;
+                return mSedFirstAdd;
             }
             set
             {
-                mFirstAdd = value;
-                OnPropertyChanged("FirstAdd");
+                mSedFirstAdd = value;
+                OnPropertyChanged("SedFirstAdd");
             }
         }
-        private int mLen = 0;
-        public int Len
+        private int mSedLen = 0;
+        public int SedLen
         {
             get
             {
-                return mLen;
+                return mSedLen;
             }
             set
             {
-                mLen = value;
-                OnPropertyChanged("Len");
+                mSedLen = value;
+                OnPropertyChanged("SedLen");
             }
         }
-
+        private int mRecFirstAdd = 0;
+        public int RecFirstAdd
+        {
+            get
+            {
+                return mRecFirstAdd;
+            }
+            set
+            {
+                mRecFirstAdd = value;
+                OnPropertyChanged("RecFirstAdd");
+            }
+        }
+        private int mRecLen = 0;
+        public int RecLen
+        {
+            get
+            {
+                return mRecLen;
+            }
+            set
+            {
+                mRecLen = value;
+                OnPropertyChanged("RecLen");
+            }
+        }
         #endregion
         public  event PropertyChangedEventHandler PropertyChanged;
+
         public void OnPropertyChanged(string propertyName)
-        { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            
+        }
+
     }
 
 

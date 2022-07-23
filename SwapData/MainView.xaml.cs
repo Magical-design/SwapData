@@ -1,4 +1,5 @@
-﻿using SwapData.ViewModel;
+﻿
+using SwapData.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -24,10 +26,10 @@ namespace SwapData
     {
         public MainView()
         {
-            InitializeComponent();
-            DataContext = this;
-            MainViewVM.mMainView = this;
             
+            InitializeComponent();
+            DataContext = new MainViewVM();
+            MainViewVM.mMainView = this;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -35,5 +37,12 @@ namespace SwapData
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+
     }
 }

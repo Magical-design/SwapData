@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SwapData"
+        xmlns:local="clr-namespace:SwapData" xmlns:vm="clr-namespace:SwapData.ViewModel" d:DataContext="{d:DesignInstance Type=vm:MainWindowVM}"
         mc:Ignorable="d"
-        Title="SwapData 1.0114" Height="450" Width="620">
+        Title="SwapData 1.0114" Height="600" Width="800" Closing="Window_Closing">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,13 +14,20 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <TabControl SelectedItem="{Binding ElementName=TabItem1, Mode=OneWay}"  >
+        <TabControl  SelectedIndex="{Binding TabCtrlSelectIndex}" >
             <TabItem x:Name="TabItem1" Header="MAIN" >
                 <Grid >
                     <local:MainView  />
                 </Grid>
             </TabItem>
-
+            <TabItem x:Name="TabItem2" Header="Setting" >
+                <TabItem.InputBindings>
+                    <MouseBinding  MouseAction="LeftClick"  Command="{Binding btOpenSettingPageClick}"/>
+                </TabItem.InputBindings>
+                <Grid  IsEnabled="{Binding SettingPageShow}">
+                    <local:Setting  />
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
